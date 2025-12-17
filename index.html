@@ -143,14 +143,40 @@ canvas{width:100%}
 <section id="projects">
 <h2>Projelerim</h2>
 <div class="projects">
-<div class="card"><h3>ESP32 Masa Saati</h3><p>OLED/LCD ekranlı masa saati.</p></div>
-<div class="card"><h3>Garaj Kapısı (Mini)</h3><p>ESP32 kontrollü sistem.</p></div>
-<div class="card"><h3>ESP32 Web Sunucu</h3><p>Tarayıcıdan kontrol.</p></div>
-<div class="card"><h3>Mouse Hub</h3><p>USB / BLE hub.</p></div>
+
+<div class="card">
+<h3>ESP32 Masa Saati</h3>
+<p>WiFi senkronizasyonlu, OLED/LCD destekli masa saati.</p>
+</div>
+
+<div class="card">
+<h3>Garaj Kapısı (Mini)</h3>
+<p>ESP32 kontrollü mini otomatik garaj kapısı sistemi.</p>
+</div>
+
+<div class="card">
+<h3>ESP32 Web Sunucu</h3>
+<p>Tarayıcı üzerinden kontrol edilebilen ESP32 sunucu.</p>
+</div>
+
+<div class="card">
+<h3>Mouse Hub</h3>
+<p>ESP32 ile USB / BLE tabanlı mouse hub projesi.</p>
+</div>
+
+<div class="card">
+<h3>Akıllı Nem Ölçer</h3>
+<p>Sensörlü, gerçek zamanlı nem izleme sistemi.</p>
+</div>
+
+<div class="card">
+<h3>Nükler ESP32</h3>
+<p>Gelişmiş, deneysel ve yüksek performanslı ESP32 projesi.</p>
+</div>
+
 </div>
 </section>
 
-<!-- LAB PANEL -->
 <section id="lab">
 <h2>ESP32 LAB PANEL</h2>
 <p>Canlı Serial Plotter ve Mikrofon Testi</p>
@@ -165,20 +191,36 @@ canvas{width:100%}
 
 <section id="contact">
 <h2>İletişim</h2>
+
 <p><strong>GitHub:</strong><br>
-<a class="btn" href="https://github.com/metincankoca" target="_blank">github.com/metincankoca</a></p>
-<p><strong>E-posta:</strong><br>metincankoca8@gmail.com</p>
-<p><strong>Telefon:</strong><br>+90 506 871 33 45</p>
+<a class="btn" href="https://github.com/metincankoca" target="_blank">
+github.com/metincankoca
+</a>
+</p>
+
+<p><strong>E-posta:</strong><br>
+metincankoca8@gmail.com
+</p>
+
+<p><strong>Telefon:</strong><br>
++90 506 871 33 45
+</p>
+
+<p><strong>YouTube:</strong><br>
+<a class="btn" href="https://www.youtube.com/@metincankoca8182" target="_blank">
+YouTube Kanalım
+</a>
+</p>
 </section>
 
 <script>
-/* CARD ANIM */
+/* CARD ANIMATION */
 const observer=new IntersectionObserver(e=>{
 e.forEach(i=>{if(i.isIntersecting)i.target.classList.add("show")})
 });
 document.querySelectorAll(".card").forEach(c=>observer.observe(c));
 
-/* SERIAL */
+/* SERIAL PLOTTER */
 let port,reader,plot=false,cpu=[],heap=[];
 const sg=document.getElementById("serialGraph").getContext("2d");
 
@@ -189,6 +231,7 @@ reader=port.readable.getReader();
 readSerial();
 }
 function startPlot(){plot=true;}
+
 async function readSerial(){
 const d=new TextDecoder();let b="";
 while(true){
@@ -207,13 +250,16 @@ drawSerial();
 }}
 function drawSerial(){
 sg.clearRect(0,0,800,300);
-sg.beginPath();cpu.forEach((v,i)=>sg.lineTo(i*8,300-v));sg.strokeStyle="#22d3ee";sg.stroke();
-sg.beginPath();heap.forEach((v,i)=>sg.lineTo(i*8,300-v));sg.strokeStyle="#38bdf8";sg.stroke();
+sg.beginPath();cpu.forEach((v,i)=>sg.lineTo(i*8,300-v));
+sg.strokeStyle="#22d3ee";sg.stroke();
+sg.beginPath();heap.forEach((v,i)=>sg.lineTo(i*8,300-v));
+sg.strokeStyle="#38bdf8";sg.stroke();
 }
 
-/* MIC */
+/* MICROPHONE */
 let ac,an,md=[];
 const mg=document.getElementById("micGraph").getContext("2d");
+
 async function startMic(){
 const s=await navigator.mediaDevices.getUserMedia({audio:true});
 ac=new AudioContext();an=ac.createAnalyser();
@@ -235,4 +281,3 @@ requestAnimationFrame(drawMic);
 
 </body>
 </html>
-
