@@ -2,7 +2,7 @@
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
-<title>Meto | ESP32 Projeleri</title>
+<title>Meto | ESP32 LAB</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
@@ -11,6 +11,26 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#020617;color:#e5e7eb;font-family:'Poppins',sans-serif}
 
+/* LOGIN */
+#login{
+position:fixed;inset:0;background:black;
+display:flex;flex-direction:column;
+justify-content:center;align-items:center;
+z-index:10000;
+font-family:'Orbitron',sans-serif;
+}
+#login input{
+padding:12px;font-size:16px;
+border:none;border-radius:6px;
+margin-top:10px;width:220px;text-align:center;
+}
+#login button{
+margin-top:15px;padding:10px 20px;
+background:#22d3ee;border:none;border-radius:6px;
+font-weight:bold;cursor:pointer;
+}
+#login p{margin-top:10px;color:#ef4444}
+
 /* BOOT */
 #boot{
 position:fixed;inset:0;background:black;color:#22d3ee;
@@ -18,78 +38,68 @@ display:flex;flex-direction:column;justify-content:center;align-items:center;
 z-index:9999;animation:bootOut 1s forwards;animation-delay:4.5s;
 font-family:'Orbitron',sans-serif;
 }
-#boot h1{margin-bottom:10px;letter-spacing:2px}
-#boot p{opacity:.7;margin-bottom:20px}
-.boot-logos img{width:55px;margin:10px;filter:invert(1);animation:blink 1.2s infinite alternate}
-@keyframes blink{from{opacity:.4}to{opacity:1}}
 @keyframes bootOut{to{opacity:0;visibility:hidden}}
 
 /* HEADER */
-header{background:#020617;padding:15px;border-bottom:1px solid #22d3ee}
+header{padding:15px;border-bottom:1px solid #22d3ee}
 nav{display:flex;justify-content:center;gap:25px}
-nav a{color:#38bdf8;text-decoration:none;font-weight:500}
-nav a:hover{color:#22d3ee}
+nav a{color:#38bdf8;text-decoration:none}
 
 /* SECTION */
 section{max-width:900px;margin:60px auto;padding:0 20px;text-align:center}
 h2{color:#22d3ee;margin-bottom:15px}
-h3{color:#38bdf8;margin:25px 0 10px}
-p{color:#cbd5f5;margin-bottom:15px}
 
 /* PROJECTS */
 .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
 .card{
-background:#020617;border:1px solid #1e293b;border-radius:8px;
-padding:15px;opacity:0;transform:translateY(40px);transition:.6s
+border:1px solid #1e293b;border-radius:8px;padding:15px;
+opacity:0;transform:translateY(40px);transition:.6s
 }
 .card.show{opacity:1;transform:translateY(0)}
-.card h3{color:#38bdf8}
 
 /* BUTTON */
 .btn{
-display:inline-block;margin:6px;padding:12px 18px;
-background:#22d3ee;color:#020617;border-radius:6px;
-text-decoration:none;font-weight:bold;cursor:pointer
+padding:10px 16px;margin:6px;
+background:#22d3ee;color:#020617;
+border-radius:6px;font-weight:bold;
+border:none;cursor:pointer
 }
-.btn:hover{background:#38bdf8}
 
 /* LAB */
-#lab canvas{border:1px solid #22d3ee;border-radius:8px;background:#020617;margin-top:15px}
+canvas{border:1px solid #22d3ee;border-radius:8px;margin-top:10px}
 
 /* GUIDE */
-.guide{
-text-align:left;background:#020617;border:1px solid #1e293b;
-border-radius:10px;padding:20px
-}
-.guide li{margin-bottom:8px;color:#cbd5f5}
+.guide{text-align:left;border:1px solid #1e293b;border-radius:10px;padding:20px}
 
 /* MOBILE */
 @media(max-width:600px){
-nav{flex-direction:column;gap:10px}
-canvas,video{width:100%}
+nav{flex-direction:column}
+video,canvas{width:100%}
 }
 </style>
 </head>
 
 <body>
 
+<!-- LOGIN -->
+<div id="login">
+<h2>🔐 Giriş</h2>
+<input id="pass" type="password" placeholder="Şifre gir">
+<button onclick="login()">Giriş</button>
+<p id="err"></p>
+</div>
+
 <!-- BOOT -->
 <div id="boot">
 <h1>ESP32 BOOT SEQUENCE</h1>
-<p>Initializing system modules...</p>
-<div class="boot-logos">
-<img src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Espressif_Logo.svg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Adafruit_logo.svg">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5d/Silicon_Labs_logo.svg">
-</div>
+<p>System initializing...</p>
 </div>
 
 <header>
 <nav>
 <a href="#home">Ana Sayfa</a>
 <a href="#projects">Projeler</a>
-<a href="#lab">Lab</a>
+<a href="#lab">LAB</a>
 <a href="#guide">ESP32 Kılavuz</a>
 <a href="#contact">İletişim</a>
 </nav>
@@ -97,81 +107,49 @@ canvas,video{width:100%}
 
 <section id="home">
 <h2>Merhaba 👋</h2>
-<p>Ben Meto. ESP32, Arduino ve gömülü sistem projeleri geliştiriyorum.</p>
-<a class="btn" href="#projects">Projelerime Bak</a>
+<p>Ben Meto. ESP32 ve gömülü sistemler.</p>
 </section>
 
 <section id="projects">
 <h2>Projelerim</h2>
 <div class="projects">
-<div class="card"><h3>ESP32 Masa Saati</h3><p>WiFi senkronizasyonlu masa saati.</p></div>
-<div class="card"><h3>Garaj Kapısı (Mini)</h3><p>ESP32 kontrollü sistem.</p></div>
-<div class="card"><h3>ESP32 Web Sunucu</h3><p>Tarayıcıdan kontrol.</p></div>
-<div class="card"><h3>Mouse Hub</h3><p>USB / BLE hub.</p></div>
-<div class="card"><h3>Akıllı Nem Ölçer</h3><p>Gerçek zamanlı sensör.</p></div>
-<div class="card"><h3>Nükler ESP32</h3><p>Deneysel yüksek performans.</p></div>
+<div class="card"><h3>ESP32 Masa Saati</h3></div>
+<div class="card"><h3>Garaj Kapısı</h3></div>
+<div class="card"><h3>ESP32 Web Sunucu</h3></div>
+<div class="card"><h3>Mouse Hub</h3></div>
+<div class="card"><h3>Akıllı Nem Ölçer</h3></div>
+<div class="card"><h3>Nükler ESP32</h3></div>
 </div>
 </section>
 
-<!-- LAB -->
 <section id="lab">
-<h2>ESP32 LAB PANEL</h2>
+<h2>ESP32 LAB</h2>
 
 <button class="btn" onclick="connectSerial()">ESP32 Bağlan</button>
-<button class="btn" onclick="startPlot()">Serial Plotter</button>
 <button class="btn" onclick="startMic()">Mikrofon Testi</button>
+<button class="btn" onclick="openPrint()">Yazdır</button>
 
-<canvas id="serialGraph" width="800" height="300"></canvas>
 <canvas id="micGraph" width="800" height="200"></canvas>
 
-<h3>Yüz Algılama Sistemi</h3>
+<h3>Yüz Algılama</h3>
 <button class="btn" onclick="startFace()">Kamerayı Aç</button>
-<button class="btn" onclick="stopFace()">Kamerayı Kapat</button>
+<button class="btn" onclick="stopFace()">Kapat</button>
 
-<div style="position:relative;display:inline-block">
-<video id="video" width="640" height="480" autoplay muted></video>
-<canvas id="faceCanvas" width="640" height="480" style="position:absolute;left:0;top:0"></canvas>
+<div style="position:relative;width:640px;height:480px;margin:auto;overflow:hidden;border:2px solid #22d3ee">
+<video id="video" autoplay muted playsinline width="640" height="480"></video>
+<canvas id="faceCanvas" width="640" height="480" style="position:absolute;top:0;left:0;pointer-events:none"></canvas>
 </div>
 </section>
 
-<!-- GUIDE -->
 <section id="guide">
 <h2>ESP32 Nasıl Kullanılır?</h2>
-
 <div class="guide">
-<h3>1️⃣ Gerekli Malzemeler</h3>
 <ul>
-<li>ESP32 DevKit V1</li>
-<li>USB kablo</li>
-<li>Bilgisayar (Windows / Linux)</li>
-</ul>
-
-<h3>2️⃣ Arduino IDE Kurulumu</h3>
-<ul>
-<li>Arduino IDE indir ve kur</li>
-<li>Ayarlar → Ek Kart URL:</li>
-<li><code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code></li>
-</ul>
-
-<h3>3️⃣ ESP32 Bağlama</h3>
-<ul>
-<li>USB ile bilgisayara bağla</li>
-<li>Port seç (COMx)</li>
-<li>Kart: <strong>DOIT ESP32 DEVKIT V1</strong></li>
-</ul>
-
-<h3>4️⃣ İlk Kod</h3>
-<ul>
-<li>Serial.begin(115200)</li>
-<li>ESP.getCpuFreqMHz()</li>
-<li>ESP.getFreeHeap()</li>
-</ul>
-
-<h3>5️⃣ Bu Web Site ile Kullanım</h3>
-<ul>
-<li>LAB Panel → ESP32 Bağlan</li>
-<li>Serial Plotter başlat</li>
-<li>Verileri canlı izle</li>
+<li>Arduino IDE kur</li>
+<li>ESP32 board ekle</li>
+<li>COM port seç</li>
+<li>Serial Monitor 115200</li>
+<li>WiFi / BLE projeleri</li>
 </ul>
 </div>
 </section>
@@ -180,96 +158,65 @@ canvas,video{width:100%}
 <h2>İletişim</h2>
 <p><a class="btn" href="https://github.com/metincankoca" target="_blank">GitHub</a></p>
 <p><a class="btn" href="https://www.youtube.com/@metincankoca8182" target="_blank">YouTube</a></p>
-<p>E-posta: metincankoca8@gmail.com</p>
-<p>Telefon: +90 506 871 33 45</p>
+<p>metincankoca8@gmail.com</p>
+<p>+90 506 871 33 45</p>
 </section>
 
-<!-- LIBS -->
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
 <script>
+/* LOGIN */
+function login(){
+if(document.getElementById("pass").value==="password"){
+document.getElementById("login").style.display="none";
+}else{
+document.getElementById("err").innerText="❌ Yanlış şifre";
+}
+}
+
 /* CARD ANIM */
-const obs=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add("show")));
-document.querySelectorAll(".card").forEach(c=>obs.observe(c));
-
-/* SERIAL */
-let port,reader,plot=false,cpu=[],heap=[];
-const sg=document.getElementById("serialGraph").getContext("2d");
-
-async function connectSerial(){
-port=await navigator.serial.requestPort();
-await port.open({baudRate:115200});
-reader=port.readable.getReader();
-readSerial();
-}
-function startPlot(){plot=true;}
-async function readSerial(){
-const d=new TextDecoder();let b="";
-while(true){
-const {value,done}=await reader.read();
-if(done)break;
-b+=d.decode(value);
-let l=b.split("\n");b=l.pop();
-l.forEach(x=>{
-if(!plot)return;
-let [c,h]=x.split(",").map(Number);
-if(!isNaN(c)){cpu.push(c);heap.push(h);
-if(cpu.length>100){cpu.shift();heap.shift();}
-drawSerial();}
-});
-}}
-function drawSerial(){
-sg.clearRect(0,0,800,300);
-sg.beginPath();cpu.forEach((v,i)=>sg.lineTo(i*8,300-v));
-sg.strokeStyle="#22d3ee";sg.stroke();
-sg.beginPath();heap.forEach((v,i)=>sg.lineTo(i*8,300-v));
-sg.strokeStyle="#38bdf8";sg.stroke();
-}
+const o=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add("show")));
+document.querySelectorAll(".card").forEach(c=>o.observe(c));
 
 /* MIC */
-let ac,an,md=[];
-const mg=document.getElementById("micGraph").getContext("2d");
 async function startMic(){
 const s=await navigator.mediaDevices.getUserMedia({audio:true});
-ac=new AudioContext();an=ac.createAnalyser();
-const src=ac.createMediaStreamSource(s);src.connect(an);
-an.fftSize=256;drawMic();
-}
-function drawMic(){
+const a=new AudioContext(),an=a.createAnalyser();
+const src=a.createMediaStreamSource(s);src.connect(an);
+const g=document.getElementById("micGraph").getContext("2d");
+an.fftSize=256;
+(function draw(){
 let d=new Uint8Array(an.frequencyBinCount);
 an.getByteFrequencyData(d);
 let v=d.reduce((a,b)=>a+b)/d.length;
-md.push(v);if(md.length>100)md.shift();
-mg.clearRect(0,0,800,200);
-mg.beginPath();md.forEach((x,i)=>mg.lineTo(i*8,200-x));
-mg.strokeStyle="#22c55e";mg.stroke();
-requestAnimationFrame(drawMic);
+g.clearRect(0,0,800,200);
+g.beginPath();g.lineTo(0,200-v);g.strokeStyle="#22d3ee";g.stroke();
+requestAnimationFrame(draw);
+})();
 }
 
-/* FACE */
-let fd,cam,stream;
-const video=document.getElementById("video");
-const fc=document.getElementById("faceCanvas");
-const fctx=fc.getContext("2d");
+/* PRINT */
+function openPrint(){window.print();}
 
+/* FACE */
+let cam,stream;
 async function startFace(){
 stream=await navigator.mediaDevices.getUserMedia({video:true});
 video.srcObject=stream;
-fd=new FaceDetection.FaceDetection({
+const fd=new FaceDetection.FaceDetection({
 locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${f}`
 });
 fd.setOptions({model:"short",minDetectionConfidence:.6});
 fd.onResults(r=>{
-fctx.clearRect(0,0,fc.width,fc.height);
-if(!r.detections)return;
+const c=faceCanvas.getContext("2d");
+c.clearRect(0,0,640,480);
 r.detections.forEach(d=>{
 const b=d.boundingBox;
-fctx.strokeStyle="#22d3ee";fctx.lineWidth=2;
-fctx.strokeRect(
-b.xCenter*fc.width-b.width*fc.width/2,
-b.yCenter*fc.height-b.height*fc.height/2,
-b.width*fc.width,b.height*fc.height
+c.strokeStyle="#22d3ee";c.strokeRect(
+b.xCenter*640-b.width*320,
+b.yCenter*480-b.height*240,
+b.width*640,b.height*480
 );
 });
 });
@@ -278,9 +225,11 @@ cam.start();
 }
 function stopFace(){
 if(stream)stream.getTracks().forEach(t=>t.stop());
-fctx.clearRect(0,0,fc.width,fc.height);
 }
 </script>
+
+</body>
+</html>
 
 </body>
 </html>
