@@ -13,100 +13,60 @@ body{background:#020617;color:#e5e7eb;font-family:'Poppins',sans-serif}
 
 /* BOOT */
 #boot{
-position:fixed;inset:0;
-background:black;color:#22d3ee;
-display:flex;flex-direction:column;
-justify-content:center;align-items:center;
-z-index:9999;
-animation:bootOut 1s forwards;
-animation-delay:4.5s;
+position:fixed;inset:0;background:black;color:#22d3ee;
+display:flex;flex-direction:column;justify-content:center;align-items:center;
+z-index:9999;animation:bootOut 1s forwards;animation-delay:4.5s;
 font-family:'Orbitron',sans-serif;
 }
 #boot h1{margin-bottom:10px;letter-spacing:2px}
 #boot p{opacity:.7;margin-bottom:20px}
-.boot-logos img{
-width:55px;margin:10px;
-filter:invert(1);
-animation:blink 1.2s infinite alternate;
-}
+.boot-logos img{width:55px;margin:10px;filter:invert(1);animation:blink 1.2s infinite alternate}
 @keyframes blink{from{opacity:.4}to{opacity:1}}
 @keyframes bootOut{to{opacity:0;visibility:hidden}}
 
 /* HEADER */
-header{
-background:#020617;
-padding:15px;
-border-bottom:1px solid #22d3ee;
-}
-nav{
-display:flex;
-justify-content:center;
-gap:25px;
-}
-nav a{
-color:#38bdf8;
-text-decoration:none;
-font-weight:500;
-}
+header{background:#020617;padding:15px;border-bottom:1px solid #22d3ee}
+nav{display:flex;justify-content:center;gap:25px}
+nav a{color:#38bdf8;text-decoration:none;font-weight:500}
 nav a:hover{color:#22d3ee}
 
 /* SECTION */
-section{
-max-width:900px;
-margin:60px auto;
-padding:0 20px;
-text-align:center;
-}
+section{max-width:900px;margin:60px auto;padding:0 20px;text-align:center}
 h2{color:#22d3ee;margin-bottom:15px}
-p{color:#cbd5f5;margin-bottom:20px}
+h3{color:#38bdf8;margin:25px 0 10px}
+p{color:#cbd5f5;margin-bottom:15px}
 
 /* PROJECTS */
-.projects{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-gap:15px;
-}
+.projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
 .card{
-background:#020617;
-border:1px solid #1e293b;
-border-radius:8px;
-padding:15px;
-opacity:0;
-transform:translateY(40px);
-transition:.6s;
+background:#020617;border:1px solid #1e293b;border-radius:8px;
+padding:15px;opacity:0;transform:translateY(40px);transition:.6s
 }
-.card.show{
-opacity:1;
-transform:translateY(0);
-}
-.card h3{color:#38bdf8;margin-bottom:8px}
+.card.show{opacity:1;transform:translateY(0)}
+.card h3{color:#38bdf8}
 
 /* BUTTON */
 .btn{
-display:inline-block;
-margin:6px;
-padding:12px 18px;
-background:#22d3ee;
-color:#020617;
-border-radius:6px;
-text-decoration:none;
-font-weight:bold;
-cursor:pointer;
+display:inline-block;margin:6px;padding:12px 18px;
+background:#22d3ee;color:#020617;border-radius:6px;
+text-decoration:none;font-weight:bold;cursor:pointer
 }
 .btn:hover{background:#38bdf8}
 
 /* LAB */
-#lab canvas{
-border:1px solid #22d3ee;
-border-radius:8px;
-background:#020617;
-margin-top:15px;
+#lab canvas{border:1px solid #22d3ee;border-radius:8px;background:#020617;margin-top:15px}
+
+/* GUIDE */
+.guide{
+text-align:left;background:#020617;border:1px solid #1e293b;
+border-radius:10px;padding:20px
 }
+.guide li{margin-bottom:8px;color:#cbd5f5}
 
 /* MOBILE */
 @media(max-width:600px){
 nav{flex-direction:column;gap:10px}
-canvas{width:100%}
+canvas,video{width:100%}
 }
 </style>
 </head>
@@ -128,8 +88,9 @@ canvas{width:100%}
 <header>
 <nav>
 <a href="#home">Ana Sayfa</a>
-<a href="#projects">Projelerim</a>
+<a href="#projects">Projeler</a>
 <a href="#lab">Lab</a>
+<a href="#guide">ESP32 Kılavuz</a>
 <a href="#contact">İletişim</a>
 </nav>
 </header>
@@ -143,43 +104,18 @@ canvas{width:100%}
 <section id="projects">
 <h2>Projelerim</h2>
 <div class="projects">
-
-<div class="card">
-<h3>ESP32 Masa Saati</h3>
-<p>WiFi senkronizasyonlu, OLED/LCD destekli masa saati.</p>
-</div>
-
-<div class="card">
-<h3>Garaj Kapısı (Mini)</h3>
-<p>ESP32 kontrollü mini otomatik garaj kapısı sistemi.</p>
-</div>
-
-<div class="card">
-<h3>ESP32 Web Sunucu</h3>
-<p>Tarayıcı üzerinden kontrol edilebilen ESP32 sunucu.</p>
-</div>
-
-<div class="card">
-<h3>Mouse Hub</h3>
-<p>ESP32 ile USB / BLE tabanlı mouse hub projesi.</p>
-</div>
-
-<div class="card">
-<h3>Akıllı Nem Ölçer</h3>
-<p>Sensörlü, gerçek zamanlı nem izleme sistemi.</p>
-</div>
-
-<div class="card">
-<h3>Nükler ESP32</h3>
-<p>Gelişmiş, deneysel ve yüksek performanslı ESP32 projesi.</p>
-</div>
-
+<div class="card"><h3>ESP32 Masa Saati</h3><p>WiFi senkronizasyonlu masa saati.</p></div>
+<div class="card"><h3>Garaj Kapısı (Mini)</h3><p>ESP32 kontrollü sistem.</p></div>
+<div class="card"><h3>ESP32 Web Sunucu</h3><p>Tarayıcıdan kontrol.</p></div>
+<div class="card"><h3>Mouse Hub</h3><p>USB / BLE hub.</p></div>
+<div class="card"><h3>Akıllı Nem Ölçer</h3><p>Gerçek zamanlı sensör.</p></div>
+<div class="card"><h3>Nükler ESP32</h3><p>Deneysel yüksek performans.</p></div>
 </div>
 </section>
 
+<!-- LAB -->
 <section id="lab">
 <h2>ESP32 LAB PANEL</h2>
-<p>Canlı Serial Plotter ve Mikrofon Testi</p>
 
 <button class="btn" onclick="connectSerial()">ESP32 Bağlan</button>
 <button class="btn" onclick="startPlot()">Serial Plotter</button>
@@ -187,40 +123,77 @@ canvas{width:100%}
 
 <canvas id="serialGraph" width="800" height="300"></canvas>
 <canvas id="micGraph" width="800" height="200"></canvas>
+
+<h3>Yüz Algılama Sistemi</h3>
+<button class="btn" onclick="startFace()">Kamerayı Aç</button>
+<button class="btn" onclick="stopFace()">Kamerayı Kapat</button>
+
+<div style="position:relative;display:inline-block">
+<video id="video" width="640" height="480" autoplay muted></video>
+<canvas id="faceCanvas" width="640" height="480" style="position:absolute;left:0;top:0"></canvas>
+</div>
+</section>
+
+<!-- GUIDE -->
+<section id="guide">
+<h2>ESP32 Nasıl Kullanılır?</h2>
+
+<div class="guide">
+<h3>1️⃣ Gerekli Malzemeler</h3>
+<ul>
+<li>ESP32 DevKit V1</li>
+<li>USB kablo</li>
+<li>Bilgisayar (Windows / Linux)</li>
+</ul>
+
+<h3>2️⃣ Arduino IDE Kurulumu</h3>
+<ul>
+<li>Arduino IDE indir ve kur</li>
+<li>Ayarlar → Ek Kart URL:</li>
+<li><code>https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json</code></li>
+</ul>
+
+<h3>3️⃣ ESP32 Bağlama</h3>
+<ul>
+<li>USB ile bilgisayara bağla</li>
+<li>Port seç (COMx)</li>
+<li>Kart: <strong>DOIT ESP32 DEVKIT V1</strong></li>
+</ul>
+
+<h3>4️⃣ İlk Kod</h3>
+<ul>
+<li>Serial.begin(115200)</li>
+<li>ESP.getCpuFreqMHz()</li>
+<li>ESP.getFreeHeap()</li>
+</ul>
+
+<h3>5️⃣ Bu Web Site ile Kullanım</h3>
+<ul>
+<li>LAB Panel → ESP32 Bağlan</li>
+<li>Serial Plotter başlat</li>
+<li>Verileri canlı izle</li>
+</ul>
+</div>
 </section>
 
 <section id="contact">
 <h2>İletişim</h2>
-
-<p><strong>GitHub:</strong><br>
-<a class="btn" href="https://github.com/metincankoca" target="_blank">
-github.com/metincankoca
-</a>
-</p>
-
-<p><strong>E-posta:</strong><br>
-metincankoca8@gmail.com
-</p>
-
-<p><strong>Telefon:</strong><br>
-+90 506 871 33 45
-</p>
-
-<p><strong>YouTube:</strong><br>
-<a class="btn" href="https://www.youtube.com/@metincankoca8182" target="_blank">
-YouTube Kanalım
-</a>
-</p>
+<p><a class="btn" href="https://github.com/metincankoca" target="_blank">GitHub</a></p>
+<p><a class="btn" href="https://www.youtube.com/@metincankoca8182" target="_blank">YouTube</a></p>
+<p>E-posta: metincankoca8@gmail.com</p>
+<p>Telefon: +90 506 871 33 45</p>
 </section>
 
-<script>
-/* CARD ANIMATION */
-const observer=new IntersectionObserver(e=>{
-e.forEach(i=>{if(i.isIntersecting)i.target.classList.add("show")})
-});
-document.querySelectorAll(".card").forEach(c=>observer.observe(c));
+<!-- LIBS -->
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
 
-/* SERIAL PLOTTER */
+<script>
+/* CARD ANIM */
+const obs=new IntersectionObserver(e=>e.forEach(i=>i.isIntersecting&&i.target.classList.add("show")));
+document.querySelectorAll(".card").forEach(c=>obs.observe(c));
+
+/* SERIAL */
 let port,reader,plot=false,cpu=[],heap=[];
 const sg=document.getElementById("serialGraph").getContext("2d");
 
@@ -231,7 +204,6 @@ reader=port.readable.getReader();
 readSerial();
 }
 function startPlot(){plot=true;}
-
 async function readSerial(){
 const d=new TextDecoder();let b="";
 while(true){
@@ -242,11 +214,10 @@ let l=b.split("\n");b=l.pop();
 l.forEach(x=>{
 if(!plot)return;
 let [c,h]=x.split(",").map(Number);
-if(!isNaN(c)){
-cpu.push(c);heap.push(h);
+if(!isNaN(c)){cpu.push(c);heap.push(h);
 if(cpu.length>100){cpu.shift();heap.shift();}
-drawSerial();
-}});
+drawSerial();}
+});
 }}
 function drawSerial(){
 sg.clearRect(0,0,800,300);
@@ -256,16 +227,14 @@ sg.beginPath();heap.forEach((v,i)=>sg.lineTo(i*8,300-v));
 sg.strokeStyle="#38bdf8";sg.stroke();
 }
 
-/* MICROPHONE */
+/* MIC */
 let ac,an,md=[];
 const mg=document.getElementById("micGraph").getContext("2d");
-
 async function startMic(){
 const s=await navigator.mediaDevices.getUserMedia({audio:true});
 ac=new AudioContext();an=ac.createAnalyser();
-const src=ac.createMediaStreamSource(s);
-src.connect(an);an.fftSize=256;
-drawMic();
+const src=ac.createMediaStreamSource(s);src.connect(an);
+an.fftSize=256;drawMic();
 }
 function drawMic(){
 let d=new Uint8Array(an.frequencyBinCount);
@@ -276,6 +245,40 @@ mg.clearRect(0,0,800,200);
 mg.beginPath();md.forEach((x,i)=>mg.lineTo(i*8,200-x));
 mg.strokeStyle="#22c55e";mg.stroke();
 requestAnimationFrame(drawMic);
+}
+
+/* FACE */
+let fd,cam,stream;
+const video=document.getElementById("video");
+const fc=document.getElementById("faceCanvas");
+const fctx=fc.getContext("2d");
+
+async function startFace(){
+stream=await navigator.mediaDevices.getUserMedia({video:true});
+video.srcObject=stream;
+fd=new FaceDetection.FaceDetection({
+locateFile:f=>`https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${f}`
+});
+fd.setOptions({model:"short",minDetectionConfidence:.6});
+fd.onResults(r=>{
+fctx.clearRect(0,0,fc.width,fc.height);
+if(!r.detections)return;
+r.detections.forEach(d=>{
+const b=d.boundingBox;
+fctx.strokeStyle="#22d3ee";fctx.lineWidth=2;
+fctx.strokeRect(
+b.xCenter*fc.width-b.width*fc.width/2,
+b.yCenter*fc.height-b.height*fc.height/2,
+b.width*fc.width,b.height*fc.height
+);
+});
+});
+cam=new Camera(video,{onFrame:async()=>fd.send({image:video}),width:640,height:480});
+cam.start();
+}
+function stopFace(){
+if(stream)stream.getTracks().forEach(t=>t.stop());
+fctx.clearRect(0,0,fc.width,fc.height);
 }
 </script>
 
