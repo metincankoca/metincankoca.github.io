@@ -1,11 +1,200 @@
 <!DOCTYPE html>
-<html>
-  <head>
-     <title>
-        ESP32
-     </title>
-  </head>
-  <body>
-    
-  </body>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Kara Şövalye 3D Mini Oyun</title>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: black;
+  font-family: Arial;
+}
+
+#ui {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  color: white;
+  background: rgba(0,0,0,0.6);
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="ui">
+Puan: <span id="score">0</span><br>
+WASD = hareket<br>
+Mouse Sol = kamera
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+
+<script>
+/* SAHNE */
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x101018);
+
+const camera = new THREE.PerspectiveCamera(
+75, innerWidth/innerHeight, 0.1, 1000
+);
+
+const renderer = new THREE.WebGLRenderer({antialias:true});
+renderer.setSize(innerWidth, innerHeight);
+document.body.appendChild(renderer.domElement);
+
+/* IŞIK */
+scene.add(new THREE.AmbientLight(0xffffff,0.7));
+const light = new THREE.DirectionalLight(0xffffff,1);
+light.position.set(5,10,5);
+scene.add(light);
+
+/* ZEMİN */
+const ground = new THREE.Mesh(
+new THREE.PlaneGeometry(200,200),
+new THREE.MeshStandardMaterial({color:0x222233})
+);
+ground.rotation.x = -Math.PI/2;
+scene.add(ground);
+
+/* DUVARLAR */
+function wall(x,z){
+  const w = new THREE.Mesh(
+    new THREE.BoxGeometry(4,3,1),
+    new THREE.MeshStandardMaterial({color:0x333344})
+  );
+  w.position.set(x,1.5,z);
+  scene.add(w);
+}
+
+for(let i=-20;i<=20;i+=5){
+  wall(i,-20);
+  wall(i,20);
+}
+
+/* KARA ŞÖVALYE (koddan model) */
+const knight = new THREE.Group();
+
+const body = new THREE.Mesh(
+new THREE.BoxGeometry(1.2,2,1),
+new THREE.MeshStandardMaterial({color:0x111111})
+);
+body.position.y = 1;
+knight.add(body);
+
+const head = new THREE.Mesh(
+new THREE.SphereGeometry(0.5,16,16),
+new THREE.MeshStandardMaterial({color:0x222222})
+);
+head.position.y = 2.3;
+knight.add(head);
+
+const visor = new THREE.Mesh(
+new THREE.BoxGeometry(0.6,0.2,0.6),
+new THREE.MeshStandardMaterial({color:0x550000, emissive:0x220000})
+);
+visor.position.set(0,2.3,0.4);
+knight.add(visor);
+
+scene.add(knight);
+
+/* KRİSTALLER */
+const crystals = [];
+const geo = new THREE.OctahedronGeometry(0.6);
+
+function spawnCrystal(){
+  const m = new THREE.MeshStandardMaterial({
+    color:0x66ccff,
+    emissive:0x2244ff
+  });
+  const c = new THREE.Mesh(geo,m);
+  c.position.set(
+    (Math.random()-0.5)*60,
+    0.7,
+    (Math.random()-0.5)*60
+  );
+  scene.add(c);
+  crystals.push(c);
+}
+
+for(let i=0;i<12;i++) spawnCrystal();
+
+/* KONTROLLER */
+const keys = {};
+addEventListener("keydown",e=>keys[e.key.toLowerCase()]=true);
+addEventListener("keyup",e=>keys[e.key.toLowerCase()]=false);
+
+/* GAMEPAD */
+function getGamepad(){
+  return navigator.getGamepads()[0];
+}
+
+/* KAMERA */
+camera.position.set(0,6,10);
+let camAngle = 0;
+
+addEventListener("mousemove",e=>{
+  if(e.buttons===1){
+    camAngle += e.movementX * 0.003;
+  }
+});
+
+/* SKOR */
+let score = 0;
+const scoreEl = document.getElementById("score");
+
+/* OYUN DÖNGÜSÜ */
+function animate(){
+requestAnimationFrame(animate);
+
+let speed = 0.15;
+
+/* klavye */
+if(keys["w"]) knight.position.z -= speed;
+if(keys["s"]) knight.position.z += speed;
+if(keys["a"]) knight.position.x -= speed;
+if(keys["d"]) knight.position.x += speed;
+
+/* gamepad */
+const gp = getGamepad();
+if(gp){
+  knight.position.x += gp.axes[0]*speed*2;
+  knight.position.z += gp.axes[1]*speed*2;
+}
+
+/* kamera takip */
+camera.position.x = knight.position.x + Math.sin(camAngle)*10;
+camera.position.z = knight.position.z + Math.cos(camAngle)*10;
+camera.lookAt(knight.position);
+
+/* kristal dönme + toplama */
+crystals.forEach(c=>{
+  c.rotation.y += 0.03;
+  if(c.position.distanceTo(knight.position)<1.4){
+    scene.remove(c);
+    score++;
+    scoreEl.textContent = score;
+    spawnCrystal();
+  }
+});
+
+renderer.render(scene,camera);
+}
+
+animate();
+
+/* resize */
+addEventListener("resize",()=>{
+camera.aspect = innerWidth/innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(innerWidth,innerHeight);
+});
+</script>
+
+</body>
 </html>
